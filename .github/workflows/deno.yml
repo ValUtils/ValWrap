@@ -1,0 +1,29 @@
+name: Upload Python Package
+
+on:
+  push:
+
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: denoland/setup-deno@v1
+      name: Setup Deno
+      with:
+        deno-version: "1.38.0"
+    - uses: robinraju/release-downloader@v1.8
+      id: download
+      with:
+        repository: "FlowerAce/json2pyi"
+        latest: true 
+    - run: cp ${{ fromJson(steps.download.outputs.downloaded_files)[0] }} ./json2pyi
+    - run: deno run -A src/main.ts > requests.py
+      name: Generate python requests
+    - uses: actions/upload-artifact@v3
+      name: Upload generated python file
+      with:
+        name: python-module
+        path: requests.py
+

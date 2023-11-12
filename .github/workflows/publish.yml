@@ -1,0 +1,64 @@
+name: Publish Python package if new version exists
+
+on:
+  schedule:
+    - cron: 0 0 * * 1
+
+
+jobs:
+  version:
+    outputs:
+      types: steps.version.types
+      tag: steps.version.tag.tag
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Get version
+      id: version
+      run: |
+        echo "TYPES=$(npm view valorant-api-types --json | jq .version)"
+    - name: Get Previous tag
+      id: tag
+      uses: "WyriHaximus/github-action-get-previous-tag@v1"
+  build:
+    needs: version
+    if: needs.version.types != needs.version.tag
+    uses: ./.github/workflows/deno.yml
+  publish:
+    needs: [version, build]
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./template
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+      - name: Download generated python module
+        uses: actions/download-artifact@v3
+        with:
+          name: python-module
+          path: template/
+      - name: Setup python project version
+        run: |
+          sed "s/^\(version = \).*$/\1\"$next\"/" pyproject.toml
+        env:
+          next: ${{ needs.version.types }}
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+      - name: Build package
+        run: python -m build
+      - name: Publish package
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.TOKEN }}
+          packages-dir: template/dist/
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ needs.version.outputs.types }}

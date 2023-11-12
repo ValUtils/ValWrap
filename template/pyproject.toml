@@ -1,0 +1,12 @@
+[project]
+name = "ValWrap"
+version = "0.7.0"
+readme = "README.md"
+authors = [{ name = "PWall" }]
+license = { text = "GPL-3.0" }
+keywords = ["valorant", "api", "endpoints"]
+dependencies = ["ValLib", "typing_extensions"]
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://github.com/ValUtils/ValWrap"
