@@ -3,5 +3,5 @@ __pycache__/
 .pytest_cache/
 dist/
 build/
-template/requests.py
+template/ValWrap/requests.py
 json2pyi*

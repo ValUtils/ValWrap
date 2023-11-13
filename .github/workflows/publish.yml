@@ -41,7 +41,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: python-module
-          path: template/
+          path: template/ValWrap/
       - name: Setup python project version
         run: |
           sed "s/^\(version = \).*$/\1\"$next\"/" pyproject.toml
