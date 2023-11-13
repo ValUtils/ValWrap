@@ -17,7 +17,9 @@ jobs:
       id: download
       with:
         repository: "FlowerAce/json2pyi"
-        latest: true 
+        latest: true
+    - name: Set json2pyi to executable
+      run: chmod +x ./json2pyi
     - run: deno run -A src/main.ts > requests.py
       name: Generate python requests
     - uses: actions/upload-artifact@v3
