@@ -1,4 +1,4 @@
-name: Publish Python package if new version exists
+name: Publish Python package
 
 on:
   schedule:
