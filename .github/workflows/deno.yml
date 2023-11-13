@@ -18,7 +18,6 @@ jobs:
       with:
         repository: "FlowerAce/json2pyi"
         latest: true 
-    - run: cp ${{ fromJson(steps.download.outputs.downloaded_files)[0] }} ./json2pyi
     - run: deno run -A src/main.ts > requests.py
       name: Generate python requests
     - uses: actions/upload-artifact@v3
