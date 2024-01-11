@@ -48,7 +48,7 @@ jobs:
           path: template/ValWrap/
       - name: Setup python project version
         run: |
-          sed "s/^\(version = \).*$/\1\"$next\"/" pyproject.toml
+          sed -i "s/^\(version = \).*$/\1\"$next\"/" pyproject.toml
         env:
           next: ${{ needs.version.outputs.types }}
       - name: Install dependencies
