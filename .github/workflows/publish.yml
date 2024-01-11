@@ -27,7 +27,7 @@ jobs:
         fallback: "0.7.0"
   build:
     needs: version
-    if: needs.version.outputs.version.types != needs.version.outputs.version.tag
+    if: needs.version.outputs.types != needs.version.outputs.tag
     uses: ./.github/workflows/deno.yml
   publish:
     needs: [version, build]
