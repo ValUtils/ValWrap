@@ -50,7 +50,7 @@ jobs:
         run: |
           sed "s/^\(version = \).*$/\1\"$next\"/" pyproject.toml
         env:
-          next: ${{ needs.version.types }}
+          next: ${{ needs.version.outputs.types }}
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
