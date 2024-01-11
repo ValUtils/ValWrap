@@ -21,6 +21,8 @@ jobs:
     - name: Get Previous tag
       id: tag
       uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      with:
+        fallback: "0.7.0"
   build:
     needs: version
     if: needs.version.types != needs.version.tag
