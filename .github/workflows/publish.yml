@@ -13,7 +13,7 @@ jobs:
       tag: ${{ steps.tag.outputs.tag }}
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
       with:
         fetch-tags: true
     - name: Get version
@@ -27,7 +27,7 @@ jobs:
         fallback: "0.7.0"
   build:
     needs: version
-    if: needs.outputs.version.types != needs.outputs.version.tag
+    if: needs.version.outputs.version.types != needs.version.outputs.version.tag
     uses: ./.github/workflows/deno.yml
   publish:
     needs: [version, build]
