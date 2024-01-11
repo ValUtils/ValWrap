@@ -10,7 +10,7 @@ jobs:
   version:
     outputs:
       types: steps.version.types
-      tag: steps.version.tag.tag
+      tag: steps.tag.tag
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
